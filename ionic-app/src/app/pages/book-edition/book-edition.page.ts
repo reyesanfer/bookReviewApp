@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Book } from 'src/app/model/book';
+import { BookService } from '../../services/book.service';
+import { NavController } from '@ionic/angular';
 @Component({
   selector: 'app-book-edition',
   templateUrl: './book-edition.page.html',
@@ -7,9 +10,63 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookEditionPage implements OnInit {
 
-  constructor() { }
+  book: Book = {
+
+  };
+
+  created = (new Date()).toISOString();
+  bookId?: number;
+
+  books: Book[] =  [];
+
+  constructor(private route: ActivatedRoute,
+    private bookService: BookService,
+    private navController: NavController) { }
 
   ngOnInit() {
+    this.bookService.getBooks().subscribe((books) => {
+      this.books = books;
+
+      this.route.queryParams.subscribe(params => {
+        if(!!params['book']) {
+          this.book = params["book"];
+          if(!!this.book.published) {
+            this.book.published = (new Date(this.book.published)).toISOString();
+            this.bookId = this.book.id;
+          }
+        }
+      });
+    })
+  }
+
+  saveChanges() {
+    if (!!this.book.id) {
+      this.bookService.updateBook(this.book).subscribe(
+        resp => {
+          this.navController.navigateForward('books');
+        }
+      );
+    } else {
+      this.bookService.createBook(this.book).then(
+        resp => {
+          const navExtras: NavigationExtras = {
+            queryParams: {
+              newBook: this.book
+            }
+          };
+          console.log(navExtras);
+          this.navController.navigateForward('books');
+        }
+      );
+    }
+  }
+
+  delete() {
+    if (!!this.book.id) {
+      this.bookService.deleteBook(this.book.id).then(resp => {
+        this.navController.navigateForward('books');
+      });
+    }
   }
 
 }

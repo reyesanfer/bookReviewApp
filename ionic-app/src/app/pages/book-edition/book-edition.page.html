@@ -1,9 +1,35 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>Edicion de un libro</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <form (ngSubmit)="saveChanges()">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-textarea name="nombre"
+                  [autoGrow]="true"
+                  [(ngModel)]="book.name"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Autor</ion-label>
+      <ion-textarea name="autor"
+                  [autoGrow]="true"
+                  [(ngModel)]="book.author"></ion-textarea>
+    </ion-item>
+    <ion-fab *ngIf="!!book.id" slot="fixed" vertical="bottom" horizontal="start">
+      <ion-fab-button (click)="delete()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-button (click)="saveChanges()">
+        GUARDAR
+      </ion-button>
+    </ion-fab>
+  </form>
 </ion-content>

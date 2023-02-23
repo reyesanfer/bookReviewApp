@@ -112,4 +112,8 @@ export class ReviewsPage implements OnInit {
    const i = index >= 10 ? index % 10 : index;
    return this.avatarClasses[i];
   }
+
+  viewBooks(): void {
+    this.navCtrl.navigateForward('books');
+  }
 }

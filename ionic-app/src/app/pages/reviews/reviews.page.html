@@ -54,6 +54,12 @@
     </ion-fab-button>
   </ion-fab>
 
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+    <ion-fab-button (click)="viewBooks()">
+      <ion-icon name="chevron-forward-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-infinite-scroll 
         threshold="25%" 
         position="bottom" 

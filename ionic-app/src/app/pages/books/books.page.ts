@@ -77,4 +77,8 @@ export class BooksPage implements OnInit {
     this.navCtrl.navigateForward('book-edition', navigationExtras)
   }
 
+  viewReviews(): void {
+    this.navCtrl.navigateForward('reviews');
+  }
+
 }
