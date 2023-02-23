@@ -38,7 +38,7 @@ export class BookService {
 
   deleteBook(bookId: number) {
     return new Promise(resolve => {
-      return this.http.delete('http://localhost:8080/books' + bookId).subscribe( (response) => {
+      return this.http.delete('http://localhost:8080/books/' + bookId).subscribe( (response) => {
         this.deletedBook.emit(bookId);
         resolve(true);
       });
