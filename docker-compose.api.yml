@@ -1,0 +1,42 @@
+version: '3'
+networks:
+  bookReview_network:
+    driver: bridge
+
+services:
+  bookReview_bdd:
+    image: "postgres:15.1"
+    container_name: bookReview_bdd
+    environment:
+      - POSTGRES_PASSWORD=bookreview
+      - POSTGRES_USER=bookreview
+      - POSTGRES_DB=bookreview
+    ports:
+      - "5432:5432"
+    volumes:
+      - bookReview_bdd_vol:/var/lib/postgresql/data
+    networks:
+      bookReview_network:
+        aliases:
+          - bdd
+
+  bookReview_back:
+    build:
+      context: ./api
+    image: inetel/bookreview_back
+    container_name: bookReview_back
+    depends_on:
+      - bookReview_bdd
+    ports:
+      - "${TOMCAT_HTTP_PORT:-8080}:8080"
+    volumes:
+      - bookReview_back_tmp_vol:/tmp
+    networks:
+      bookReview_network:
+        aliases:
+          - back
+
+volumes:
+  bookReview_bdd_vol:
+  bookReview_back_tmp_vol:
+

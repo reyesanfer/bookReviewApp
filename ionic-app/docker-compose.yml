@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  bookReview-ionic:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    image: ionic-dev:latest  
+    container_name: ionic-dev
+    environment:
+      - TZ=Atlantic/Canary
+    ports:
+      - "8100:8100"
+    volumes:
+      - ./:/proyecto-ionic
+    stdin_open: true
+    network_mode: 'host'
+    tty: true  

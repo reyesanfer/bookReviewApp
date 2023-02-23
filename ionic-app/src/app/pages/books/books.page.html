@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Libros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let book of books" class="book">
+        <ion-card-title>{{book.name}}</ion-card-title>
+        <ion-card-subtitle>{{book.author}}</ion-card-subtitle>
+        <ion-avatar><img [src]="book.cover" /></ion-avatar>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addNewBook()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-infinite-scroll 
+        threshold="25%" 
+        position="bottom" 
+        (ionInfinite)="loadBooks(true)">
+  <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

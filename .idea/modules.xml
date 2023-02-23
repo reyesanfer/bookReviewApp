@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/api/bookReview.iml" filepath="$PROJECT_DIR$/api/bookReview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api/bookreview-api-rest/bookReviewAPI.iml" filepath="$PROJECT_DIR$/api/bookreview-api-rest/bookReviewAPI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bookReviewApp.iml" filepath="$PROJECT_DIR$/.idea/bookReviewApp.iml" />
+    </modules>
+  </component>
+</project>
