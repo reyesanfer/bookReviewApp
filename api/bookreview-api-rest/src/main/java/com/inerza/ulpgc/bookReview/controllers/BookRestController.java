@@ -28,6 +28,7 @@ public class BookRestController {
     private IBookService bookService;
 
     @Operation(summary = "Get books", description = "Provides all available books list")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
             @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
@@ -48,72 +49,8 @@ public class BookRestController {
           .collect(Collectors.toList());
     }
 
-
-    @Operation(summary = "Create books")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
-            @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
-                    content = { @Content(examples = { @ExampleObject(value = "") }) }),
-            @ApiResponse(responseCode = "404", description = "${api.response-codes.notFound.desc}",
-                    content = { @Content(examples = { @ExampleObject(value = "") }) }) })
-    @GetMapping(produces = "application/json")
-    @ResponseBody
-    public List<BookDTO> createBooks(
-            @RequestParam() Integer page,
-            @RequestParam() Integer size,
-            @RequestParam() String sortDir,
-            @RequestParam() String sort) {
-
-        List<Book> books = bookService.getBookList(page, size, sortDir, sort);
-        return books.stream()
-                .map(x -> BookMapper.INSTANCE.convertToDto(x))
-                .collect(Collectors.toList());
-    }
-
-
-    @Operation(summary = "Update books", description = "Provides all available books list")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
-            @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
-                    content = { @Content(examples = { @ExampleObject(value = "") }) }),
-            @ApiResponse(responseCode = "404", description = "${api.response-codes.notFound.desc}",
-                    content = { @Content(examples = { @ExampleObject(value = "") }) }) })
-    @GetMapping(produces = "application/json")
-    @ResponseBody
-    public List<BookDTO> updateBooks(
-            @RequestParam() Integer page,
-            @RequestParam() Integer size,
-            @RequestParam() String sortDir,
-            @RequestParam() String sort) {
-
-        List<Book> books = bookService.getBookList(page, size, sortDir, sort);
-        return books.stream()
-                .map(x -> BookMapper.INSTANCE.convertToDto(x))
-                .collect(Collectors.toList());
-    }
-
-    @Operation(summary = "Delete books", description = "Provides all available books list")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
-            @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
-                    content = { @Content(examples = { @ExampleObject(value = "") }) }),
-            @ApiResponse(responseCode = "404", description = "${api.response-codes.notFound.desc}",
-                    content = { @Content(examples = { @ExampleObject(value = "") }) }) })
-    @GetMapping(produces = "application/json")
-    @ResponseBody
-    public List<BookDTO> deleteBooks(
-            @RequestParam() Integer page,
-            @RequestParam() Integer size,
-            @RequestParam() String sortDir,
-            @RequestParam() String sort) {
-
-        List<Book> books = bookService.getBookList(page, size, sortDir, sort);
-        return books.stream()
-                .map(x -> BookMapper.INSTANCE.convertToDto(x))
-                .collect(Collectors.toList());
-    }
-
     @Operation(summary = "Create a book")
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
             @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
@@ -130,6 +67,7 @@ public class BookRestController {
     }
 
     @Operation(summary = "Get a book by id")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
             @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
@@ -142,7 +80,8 @@ public class BookRestController {
         return BookMapper.INSTANCE.convertToDto(bookService.getBookById(id));
     }
 
-    @Operation(summary = "Update a book by id")
+    @Operation(summary = "Update a book")
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
             @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
@@ -161,6 +100,7 @@ public class BookRestController {
     }
 
     @Operation(summary = "Delete a book by id")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
             @ApiResponse(responseCode = "400", description = "${api.response-codes.badRequest.desc}",
@@ -172,4 +112,5 @@ public class BookRestController {
     public void deleteBookById(@PathVariable("id") Long id) throws ParseException {
         bookService.deleteBook(id);
     }
+
 }
