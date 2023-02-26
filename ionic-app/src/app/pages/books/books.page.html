@@ -9,11 +9,24 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item *ngFor="let book of books" class="book" (click)="editBook(book)">
-        <ion-card-title>{{book.name}}</ion-card-title>
-        <ion-card-subtitle>{{book.author}}</ion-card-subtitle>
-        <ion-avatar><img [src]="book.cover" /></ion-avatar>
-    </ion-item>
+    <ion-grid>
+      <ion-item *ngFor="let book of books" class="book" (click)="editBook(book)">
+          <ion-row>
+            <ion-col>
+              <ion-avatar><img [src]="book.cover" /></ion-avatar>
+              <div class="created">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <ion-label>{{book.published | date: 'd MMM, YYYY'}}</ion-label>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-card-title>{{book.name}}</ion-card-title>
+              <ion-card-subtitle>{{book.author}}</ion-card-subtitle>
+              <ion-card-subtitle>{{book.isbn}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+      </ion-item>
+  </ion-grid>
   </ion-list>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
