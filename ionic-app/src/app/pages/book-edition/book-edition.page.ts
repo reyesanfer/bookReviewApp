@@ -14,7 +14,7 @@ export class BookEditionPage implements OnInit {
 
   };
 
-  created = (new Date()).toISOString();
+  published = (new Date()).toISOString();
   bookId?: number;
 
   books: Book[] =  [];
