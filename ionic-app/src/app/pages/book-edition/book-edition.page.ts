@@ -29,7 +29,10 @@ export class BookEditionPage implements OnInit {
   ngOnInit() {
     this.bookService.getBooks().subscribe((books) => {
       this.books = books;
-      this.lastBookId = this.books[this.books.length - 1].id;
+      this.lastBookId = (this.books[this.books.length - 1].id);
+      if (this.lastBookId) {
+        this.lastBookId += 1;
+      }
       this.route.queryParams.subscribe(params => {
         if(!!params['book']) {
           this.book = params["book"];
