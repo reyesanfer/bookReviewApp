@@ -53,12 +53,6 @@ export class BookEditionPage implements OnInit {
       );
     } else {
       this.book.id = this.lastBookId;
-      const navExtras: NavigationExtras = {
-        queryParams: {
-          newBook: this.book
-        }
-      };
-      console.log(navExtras);
       this.bookService.createBook(this.book).then(
         resp => {
           const navExtras: NavigationExtras = {
