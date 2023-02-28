@@ -32,7 +32,8 @@
         <ion-textarea name="url de la imagen"
                 [(ngModel)]="book.cover"></ion-textarea>
         <ion-avatar>
-          <img [src]="book.cover"/>
+          <img *ngIf="!!book.cover" [src]="book.cover"/>
+          <ion-icon *ngIf="!book.cover" name="image" size="large"></ion-icon>
         </ion-avatar>
     </ion-item>
     <ion-item>

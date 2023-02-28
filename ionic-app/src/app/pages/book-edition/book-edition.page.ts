@@ -76,12 +76,15 @@ export class BookEditionPage implements OnInit {
       );
     }
   }
+
   delete() {
     this.deleteReviews().then(resp => {
-      if (!!this.book.id) {
+      if (resp) {
+        if (!!this.book.id) {
         this.bookService.deleteBook(this.book.id).then(resp => {
           this.navController.navigateForward('books');
         });
+      }
       }
     });
   }
@@ -94,6 +97,7 @@ export class BookEditionPage implements OnInit {
         }
       }
     });
+    return true;
   }
 
 }
