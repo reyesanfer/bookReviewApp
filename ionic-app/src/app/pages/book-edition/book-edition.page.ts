@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Book } from 'src/app/model/book';
 import { BookService } from '../../services/book.service';
+import { ReviewService } from 'src/app/services/review.service';
+import { Review } from '../../model/review';
 import { IonInfiniteScroll, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-book-edition',
@@ -21,9 +23,11 @@ export class BookEditionPage implements OnInit {
   bookId?: number;
 
   books: Book[] =  [];
+  reviewsList: Review[] = [];
 
   constructor(private route: ActivatedRoute,
     private bookService: BookService,
+    private reviewsService: ReviewService,
     private navController: NavController) { }
 
   ngOnInit() {
@@ -40,6 +44,9 @@ export class BookEditionPage implements OnInit {
             this.book.published = (new Date(this.book.published)).toISOString();
             this.bookId = this.book.id;
           }
+        }
+        if (!!params['reviews']) {
+          this.reviewsList = params["reviews"];
         }
       });
     })
@@ -69,13 +76,24 @@ export class BookEditionPage implements OnInit {
       );
     }
   }
-
   delete() {
-    if (!!this.book.id) {
-      this.bookService.deleteBook(this.book.id).then(resp => {
-        this.navController.navigateForward('books');
-      });
-    }
+    this.deleteReviews().then(resp => {
+      if (!!this.book.id) {
+        this.bookService.deleteBook(this.book.id).then(resp => {
+          this.navController.navigateForward('books');
+        });
+      }
+    });
+  }
+
+  async deleteReviews() {
+    this.reviewsList.forEach(review => {
+      if (review.book?.id === this.book.id) {
+        if (review.id) {
+          this.reviewsService.deleteReview(review.id);
+        }
+      }
+    });
   }
 
 }

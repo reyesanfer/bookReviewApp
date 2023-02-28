@@ -20,7 +20,7 @@ export class ReviewsPage implements OnInit {
   page = 0;
   size = 7;
 
-  reviews: Review[] = [];
+  public reviews: Review[] = [];
   avatarClasses = ['avatar-rojo', 'avatar-verde', 'avatar-azul-claro', 'avatar-azul-oscuro', 'avatar-violeta', 
                    'avatar-amarillo', 'avatar-rosa', 'avatar-naranja', 'avatar-turquesa', 'avatar-verde-limon'];
 
@@ -101,7 +101,8 @@ export class ReviewsPage implements OnInit {
   viewBook(review: Review): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        book: review.book
+        book: review.book,
+        reviews: this.reviews
       }
     };
     this.navCtrl.navigateForward('book-edition', navigationExtras);
@@ -114,6 +115,11 @@ export class ReviewsPage implements OnInit {
   }
 
   viewBooks(): void {
-    this.navCtrl.navigateForward('books');
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        reviews: this.reviews
+      }
+    };
+    this.navCtrl.navigateForward('books', navigationExtras);
   }
 }
