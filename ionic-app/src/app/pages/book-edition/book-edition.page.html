@@ -28,6 +28,14 @@
                   [(ngModel)]="book.isbn"></ion-textarea>
     </ion-item>
     <ion-item>
+        <ion-label position="floating">url de la imagen</ion-label>
+        <ion-textarea name="url de la imagen"
+                [(ngModel)]="book.cover"></ion-textarea>
+        <ion-avatar>
+          <img [src]="book.cover"/>
+        </ion-avatar>
+    </ion-item>
+    <ion-item>
       <ion-label position="floating">Fecha de publicacion</ion-label>
       <ion-input id="open-popover2" value="{{published | date: 'd MMM, yyyy'}}"></ion-input>
       <ion-popover trigger="open-popover2" cssClass="width-80">

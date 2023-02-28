@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Book } from 'src/app/model/book';
 import { BookService } from '../../services/book.service';
-import { NavController } from '@ionic/angular';
+import { IonInfiniteScroll, NavController } from '@ionic/angular';
 @Component({
   selector: 'app-book-edition',
   templateUrl: './book-edition.page.html',
   styleUrls: ['./book-edition.page.scss'],
 })
 export class BookEditionPage implements OnInit {
+  @ViewChild(IonInfiniteScroll, { static: true })
+  infiniteScroll?: IonInfiniteScroll;
 
   book: Book = {
 
