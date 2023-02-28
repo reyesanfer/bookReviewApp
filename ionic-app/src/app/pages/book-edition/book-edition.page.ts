@@ -16,6 +16,7 @@ export class BookEditionPage implements OnInit {
 
   };
 
+  lastBookId?: number;
   published = (new Date()).toISOString();
   bookId?: number;
 
@@ -28,7 +29,7 @@ export class BookEditionPage implements OnInit {
   ngOnInit() {
     this.bookService.getBooks().subscribe((books) => {
       this.books = books;
-
+      this.lastBookId = this.books[this.books.length - 1].id;
       this.route.queryParams.subscribe(params => {
         if(!!params['book']) {
           this.book = params["book"];
@@ -42,6 +43,8 @@ export class BookEditionPage implements OnInit {
   }
 
   saveChanges() {
+    this.book.published = this.published;
+
     if (!!this.book.id) {
       this.bookService.updateBook(this.book).subscribe(
         resp => {
@@ -49,6 +52,13 @@ export class BookEditionPage implements OnInit {
         }
       );
     } else {
+      this.book.id = this.lastBookId;
+      const navExtras: NavigationExtras = {
+        queryParams: {
+          newBook: this.book
+        }
+      };
+      console.log(navExtras);
       this.bookService.createBook(this.book).then(
         resp => {
           const navExtras: NavigationExtras = {
