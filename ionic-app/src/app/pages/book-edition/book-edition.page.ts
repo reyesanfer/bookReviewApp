@@ -135,7 +135,7 @@ export class BookEditionPage implements OnInit {
       duration: 1000,
       position: 'top',
       icon: 'checkmark-circle-outline',
-      color: 'black'
+      color: 'light'
     });
     await toast.present();
   }
@@ -146,7 +146,7 @@ export class BookEditionPage implements OnInit {
       duration: 1000,
       position: 'top',
       icon: 'trash-outline',
-      color: 'black'
+      color: 'light'
     });
     await toast.present();
   }
@@ -157,7 +157,7 @@ export class BookEditionPage implements OnInit {
       duration: 1000,
       position: 'top',
       icon: 'create-outline',
-      color: 'black'
+      color: 'light'
     });
     await toast.present();
   }

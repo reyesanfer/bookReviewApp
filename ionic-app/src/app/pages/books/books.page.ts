@@ -33,7 +33,7 @@ export class BooksPage implements OnInit {
 
   ngOnInit() {
 
-    this.loadBooks(true);
+    this.loadBooks(false);
 
     this.bookService.newBook.subscribe( book => {
       this.books.unshift(book);
