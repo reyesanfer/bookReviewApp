@@ -90,7 +90,9 @@ export class BookEditionPage implements OnInit {
         if (!!this.book.id) {
         this.bookService.deleteBook(this.book.id).then(resp => {
           this.deletedToast().then(() => {
-            this.navController.navigateForward('books');
+            if (resp) {
+              this.navController.navigateForward('books');
+            }
           });
         });
       }
