@@ -115,8 +115,10 @@ export class ReviewEditionPage implements OnInit {
   async createdToast() {
     const toast = await this.toastController.create({
       message: 'Se ha creado correctamente la reseña',
-      duration: 5000,
-      cssClass: 'toast-center'
+      duration: 1000,
+      position: 'top',
+      icon: 'checkmark-circle-outline',
+      color: 'black'
     });
     await toast.present();
   }
@@ -124,8 +126,10 @@ export class ReviewEditionPage implements OnInit {
   async deletedToast() {
     const toast = await this.toastController.create({
       message: 'Se ha eliminado correctamente la reseña',
-      duration: 5000,
-      cssClass: 'toast-center'
+      duration: 1000,
+      position: 'top',
+      icon: 'trash-outline',
+      color: 'black'
     });
     await toast.present();
   }
@@ -133,10 +137,12 @@ export class ReviewEditionPage implements OnInit {
   async editedToast() {
     const toast = await this.toastController.create({
       message: 'Se ha editado correctamente la reseña',
-      duration: 5000,
-      cssClass: 'toast-center'
+      duration: 1000,
+      position: 'top',
+      icon: 'create-outline',
+      color: 'black'
     });
-    await toast.present();
+    toast.present();
   }
 
 }
