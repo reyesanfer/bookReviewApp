@@ -5,6 +5,7 @@ import { BookService } from '../../services/book.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { Review } from '../../model/review';
 import { IonInfiniteScroll, NavController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-book-edition',
   templateUrl: './book-edition.page.html',
@@ -28,7 +29,9 @@ export class BookEditionPage implements OnInit {
   constructor(private route: ActivatedRoute,
     private bookService: BookService,
     private reviewsService: ReviewService,
-    private navController: NavController) { }
+    private navController: NavController,
+    private alertController: AlertController,
+    private toastController: ToastController) { }
 
   ngOnInit() {
     this.bookService.getBooks().subscribe((books) => {
@@ -58,7 +61,9 @@ export class BookEditionPage implements OnInit {
     if (!!this.book.id) {
       this.bookService.updateBook(this.book).subscribe(
         resp => {
-          this.navController.navigateForward('books');
+          this.editedToast().then(() => {
+            this.navController.navigateForward('books');
+          });
         }
       );
     } else {
@@ -71,7 +76,9 @@ export class BookEditionPage implements OnInit {
             }
           };
           console.log(navExtras);
-          this.navController.navigateForward('books');
+          this.createdToast().then(() => {
+            this.navController.navigateForward('books');
+          });
         }
       );
     }
@@ -82,7 +89,9 @@ export class BookEditionPage implements OnInit {
       if (resp) {
         if (!!this.book.id) {
         this.bookService.deleteBook(this.book.id).then(resp => {
-          this.navController.navigateForward('books');
+          this.deletedToast().then(() => {
+            this.navController.navigateForward('books');
+          });
         });
       }
       }
@@ -98,6 +107,53 @@ export class BookEditionPage implements OnInit {
       }
     });
     return true;
+  }
+
+  async presentDeleteAlert() {
+    const alert = await this.alertController.create({
+      header: 'Confirme la acción',
+      message: '¿Está seguro de que desea eliminar el libro?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.delete();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async createdToast() {
+    const toast = await this.toastController.create({
+      message: 'Se ha creado correctamente el libro',
+      duration: 5000,
+      cssClass: 'toast-center'
+    });
+    await toast.present();
+  }
+
+  async deletedToast() {
+    const toast = await this.toastController.create({
+      message: 'Se ha eliminado correctamente el libro',
+      duration: 5000,
+      cssClass: 'toast-center'
+    });
+    await toast.present();
+  }
+
+  async editedToast() {
+    const toast = await this.toastController.create({
+      message: 'Se ha editado correctamente el libro',
+      duration: 5000,
+      cssClass: 'toast-center'
+    });
+    await toast.present();
   }
 
 }

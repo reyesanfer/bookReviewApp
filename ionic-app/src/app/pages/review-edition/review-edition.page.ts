@@ -5,6 +5,7 @@ import { ReviewService } from 'src/app/services/review.service';
 import { Review } from '../../model/review';
 import { BookService } from '../../services/book.service';
 import { NavController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-review-edition',
@@ -25,7 +26,9 @@ export class ReviewEditionPage implements OnInit {
   constructor(private route: ActivatedRoute,
     private bookService: BookService,
     private reviewService: ReviewService,
-    private navController: NavController) { }
+    private navController: NavController,
+    private alertController: AlertController,
+    private toastController: ToastController) { }
 
   ngOnInit() {
     // Obtenemos la lista de libros para cargar el atributo books que utilizará el componente ion-select 
@@ -56,7 +59,9 @@ export class ReviewEditionPage implements OnInit {
     if (!!this.review.id) {
       this.reviewService.updateReview(this.review).subscribe(
         resp =>{
-          this.navController.navigateForward('reviews');
+          this.editedToast().then(() => {
+            this.navController.navigateForward('reviews');
+          });
         }
       );
     } else {
@@ -68,7 +73,9 @@ export class ReviewEditionPage implements OnInit {
             }
           };
           console.log(navExtras);
-          this.navController.navigateForward('reviews');
+          this.createdToast().then(() => {
+            this.navController.navigateForward('reviews');
+          });
         }
       );
     }
@@ -78,9 +85,58 @@ export class ReviewEditionPage implements OnInit {
     if (!!this.review.id) {
       this.reviewService.deleteReview(this.review.id)
         .then(resp => {
-          this.navController.navigateForward('reviews');
+          this.deletedToast().then(() => {
+            this.navController.navigateForward('reviews');
+          });
         });
     }
+  }
+
+  async presentDeleteAlert() {
+    const alert = await this.alertController.create({
+      header: 'Confirme la acción',
+      message: '¿Está seguro de que desea eliminar la reseña?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.delete();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async createdToast() {
+    const toast = await this.toastController.create({
+      message: 'Se ha creado correctamente la reseña',
+      duration: 5000,
+      cssClass: 'toast-center'
+    });
+    await toast.present();
+  }
+
+  async deletedToast() {
+    const toast = await this.toastController.create({
+      message: 'Se ha eliminado correctamente la reseña',
+      duration: 5000,
+      cssClass: 'toast-center'
+    });
+    await toast.present();
+  }
+
+  async editedToast() {
+    const toast = await this.toastController.create({
+      message: 'Se ha editado correctamente la reseña',
+      duration: 5000,
+      cssClass: 'toast-center'
+    });
+    await toast.present();
   }
 
 }
