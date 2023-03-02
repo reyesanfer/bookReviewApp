@@ -60,7 +60,7 @@ export class BooksPage implements OnInit {
     this.bookService.getBooks(this.size).subscribe(
       (bookList: Book[]) => {
         this.books = [...this.books, ...bookList];
-        if (!!this.infiniteScroll && (!bookList || bookList.length < this.size)) {
+        if (!!this.infiniteScroll && (!bookList || bookList.length <= this.size)) {
           console.log('fin');
             this.infiniteScroll.disabled = true;
             return;
