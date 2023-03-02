@@ -1,6 +1,7 @@
 # Enlace a la API publicada en azure
 https://bookreview-back.ashyhill-ef64db67.westeurope.azurecontainerapps.io/openapi/swagger-ui/index.html
 
+
 # curso-devops-ulpgc
 
 Aplicación de ejemplo sobre Reseñas de Libros para explicar el proceso completo de desarrollo y despliegue.
