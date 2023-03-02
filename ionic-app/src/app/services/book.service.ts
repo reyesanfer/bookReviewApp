@@ -21,12 +21,12 @@ export class BookService {
     params = params.append('size', !!size ? size: 50);
     params = params.append('sortDir', 'asc');
     params = params.append('sort', 'id');
-    return this.http.get<Book[]>( apiConection + '/books', { params });
+    return this.http.get<Book[]>( apiConection.url + '/books', { params });
   }
 
   createBook(book: Book) {
     return new Promise(resolve => {
-      this.http.post(apiConection + '/books', book).subscribe((response: Book) => {
+      this.http.post(apiConection.url + '/books', book).subscribe((response: Book) => {
         this.newBook.emit(response);
         resolve(true);
       });
@@ -34,12 +34,12 @@ export class BookService {
   }
 
   updateBook(book: Book) {
-    return this.http.put(apiConection + '/books/' + book.id, book);
+    return this.http.put(apiConection.url + '/books/' + book.id, book);
   }
 
   deleteBook(bookId: number) {
     return new Promise(resolve => {
-      return this.http.delete(apiConection + '/books/' + bookId).subscribe( (response) => {
+      return this.http.delete(apiConection.url + '/books/' + bookId).subscribe( (response) => {
         this.deletedBook.emit(bookId);
         resolve(true);
       });

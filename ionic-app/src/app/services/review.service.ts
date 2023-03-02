@@ -24,12 +24,12 @@ export class ReviewService {
     params = params.append('sortDir', 'desc');
     params = params.append('sort', 'id');
 
-    return this.http.get<Review[]>(apiConection + '/reviews', { params });
+    return this.http.get<Review[]>(apiConection.url + '/reviews', { params });
   }
 
   createReview(review: Review) {
     return new Promise(resolve => {
-      this.http.post(apiConection + '/reviews', review)
+      this.http.post(apiConection.url + '/reviews', review)
         .subscribe((response: Review) => {
           this.newReview.emit(response);
           resolve(true);
@@ -38,12 +38,12 @@ export class ReviewService {
   }
 
   updateReview(review: Review) {
-    return this.http.put(apiConection + '/reviews/' + review.id, review);
+    return this.http.put(apiConection.url + '/reviews/' + review.id, review);
   }
 
   deleteReview(reviewId: number) {
     return new Promise(resolve => {
-      return this.http.delete(apiConection + '/reviews/' + reviewId)
+      return this.http.delete(apiConection.url + '/reviews/' + reviewId)
       .subscribe( (response) => {
         this.deletedReview.emit(reviewId);
         resolve(true);
