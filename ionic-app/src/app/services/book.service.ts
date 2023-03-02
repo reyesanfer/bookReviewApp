@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from '../model/book';
+import { apiConection } from '../../environments/environment';
 
 
 @Injectable({
@@ -20,12 +21,12 @@ export class BookService {
     params = params.append('size', !!size ? size: 50);
     params = params.append('sortDir', 'asc');
     params = params.append('sort', 'id');
-    return this.http.get<Book[]>('http://localhost:8080/books', { params });
+    return this.http.get<Book[]>( apiConection + '/books', { params });
   }
 
   createBook(book: Book) {
     return new Promise(resolve => {
-      this.http.post('http://localhost:8080/books', book).subscribe((response: Book) => {
+      this.http.post(apiConection + '/books', book).subscribe((response: Book) => {
         this.newBook.emit(response);
         resolve(true);
       });
@@ -33,12 +34,12 @@ export class BookService {
   }
 
   updateBook(book: Book) {
-    return this.http.put('http://localhost:8080/books/' + book.id, book);
+    return this.http.put(apiConection + '/books/' + book.id, book);
   }
 
   deleteBook(bookId: number) {
     return new Promise(resolve => {
-      return this.http.delete('http://localhost:8080/books/' + bookId).subscribe( (response) => {
+      return this.http.delete(apiConection + '/books/' + bookId).subscribe( (response) => {
         this.deletedBook.emit(bookId);
         resolve(true);
       });
